@@ -30,6 +30,12 @@ layer {
   }
 }
 layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer {
   name: "pool1"
   type: "Pooling"
   bottom: "conv1"
@@ -64,6 +70,12 @@ layer {
   }
 }
 layer {
+  name: "relu2"
+  type: "ReLU"
+  bottom: "conv2"
+  top: "conv2"
+}
+layer {
   name: "pool2"
   type: "Pooling"
   bottom: "conv2"
@@ -96,7 +108,7 @@ layer {
   }
 }
 layer {
-  name: "relu1"
+  name: "relu3"
   type: "ReLU"
   bottom: "ip1"
   top: "ip1"

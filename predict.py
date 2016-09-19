@@ -14,8 +14,8 @@ parser.add_argument('-i','--input_digits', dest='test_digits',help='directory fo
 args = parser.parse_args()
 
 test_images = args.test_digits
-model_path = './lenet.prototxt'
-pre_trained = '/tmp/MNIST/snapshot_iter_10000.caffemodel'
+model_path = '/home/pwhc/kaggle/KAGGLE_MNIST/lenet.prototxt'
+pre_trained = '/tmp/MNIST/snapshot/_iter_15000.caffemodel'
 
 caffe.set_mode_cpu()
 net = caffe.Classifier(model_path,pre_trained,image_dims=(28,28))
