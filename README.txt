@@ -3,10 +3,10 @@ MNIST
 
 Patrick Carson
 
-This file: REAME.txt
+This file: README.txt
 REPO: https://Patrick_Carson@bitbucket.org/Patrick_Carson/mnist-kaggle.git
 
-========================================================================================
+===========================================================================
 
 Convolutional Neural Network (LeNet) approach to classifying MNIST dataset.
 
