@@ -21,7 +21,7 @@ os.chdir(imagesDir)
 imagelist = [ image for image in os.listdir(imagesDir)]
 
 # split radargram images into lists for entry into train/test directories (75/25% train/test split)
-train, test = train_test_split(imagelist, test_size=0.25)
+train, test = train_test_split(imagelist, test_size=0.2)
 
 # create directories for train and test data
 os.chdir(imagesDir)

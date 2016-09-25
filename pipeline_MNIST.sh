@@ -67,11 +67,11 @@ fi
 
 # extract mnist images for trianing
 cd $IMAGES_DIR
-python $HOME/extract_digits.py -f $HOME/data/train.csv -m /home/pwhc/kaggle/KAGGLE_MNIST/images
+python $HOME/extract_digits.py -f $HOME/data/train.csv -m /home/pwhc/kaggle/MNIST-KAGGLE/images
 
 # extract mnist images for testing
 cd $VALIDATE_DIR
-python $HOME/extract_digits.py -f $HOME/data/test.csv -m /home/pwhc/kaggle/KAGGLE_MNIST/validate_images
+python $HOME/extract_digits.py -f $HOME/data/test.csv -m /home/pwhc/kaggle/MNIST-KAGGLE/validate_images
 
 #########################################################################################
 # Stage 3: Split training images into train and test datasets
@@ -98,4 +98,6 @@ $HOME/train_lenet.sh
 # Stage 6: Validate lenet CNN: save scores in csv file for kaggle submission
 #########################################################################################
 
-python $HOME/predict.py -i /tmp/MNIST/validate_images/
+cd $HOME 
+
+python ./predict.py -i /tmp/MNIST/validate_images/

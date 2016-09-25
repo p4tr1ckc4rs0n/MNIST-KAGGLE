@@ -18,7 +18,7 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 20
+    num_output: 32
     kernel_size: 5
     stride: 1
     weight_filler {
@@ -58,7 +58,7 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 50
+    num_output: 64
     kernel_size: 5
     stride: 1
     weight_filler {
@@ -98,7 +98,7 @@ layer {
     lr_mult: 2
   }
   inner_product_param {
-    num_output: 500
+    num_output: 1024
     weight_filler {
       type: "xavier"
     }
@@ -112,6 +112,15 @@ layer {
   type: "ReLU"
   bottom: "ip1"
   top: "ip1"
+}
+layer {
+  name: "drop1"
+  type: "Dropout"
+  bottom: "ip1"
+  top: "ip1"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
 }
 layer {
   name: "ip2"
