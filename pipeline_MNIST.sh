@@ -65,7 +65,7 @@ fi
 # Stage 2: Extract digits from csv file 
 #########################################################################################
 
-# extract mnist images for trianing
+# extract mnist images for training
 cd $IMAGES_DIR
 python $HOME/extract_digits.py -f $HOME/data/train.csv -m /home/pwhc/kaggle/MNIST-KAGGLE/images
 
@@ -74,7 +74,7 @@ cd $VALIDATE_DIR
 python $HOME/extract_digits.py -f $HOME/data/test.csv -m /home/pwhc/kaggle/MNIST-KAGGLE/validate_images
 
 #########################################################################################
-# Stage 3: Split training images into train and test datasets
+# Stage 3: Split training images into train and test data sets
 #########################################################################################
 
 python $HOME/prepare_images.py -i $IMAGES_DIR -l $LABELS_DIR
@@ -100,4 +100,4 @@ $HOME/train_lenet.sh
 
 cd $HOME 
 
-python ./predict.py -i /tmp/MNIST/validate_images/
+python ./predict.py -i /tmp/MNIST/validate_images/ -p ./lenet.prototxt -m /tmp/MNIST/snapshot/_iter_500.caffemodel

@@ -5,63 +5,58 @@ import os
 import shutil
 import argparse
 
-parser = argparse.ArgumentParser(description='Process some inputs.')
 
-parser.add_argument('-i','--input', dest='imagesDir',help='training images directory')
+def setup(image_dir, train_name, test_name):
+    # create directories for train and test data
+    os.chdir(image_dir)
+    os.makedirs(train_name)
+    os.makedirs(test_name)
 
-parser.add_argument('-l','--label_directory',dest='labelsDir',help='directory for labels list files')
+    # training images
+    images = [image for image in os.listdir(image_dir)]
 
-args = parser.parse_args()
+    # train test split (80/20)
+    train_images, test_images = train_test_split(images, test_size=0.2)
 
-# switch to correct directory
-imagesDir = str(args.imagesDir)
-os.chdir(imagesDir)
+    return train_images, test_images
 
-# list containing all training images
-imagelist = [ image for image in os.listdir(imagesDir)]
 
-# split radargram images into lists for entry into train/test directories (75/25% train/test split)
-train, test = train_test_split(imagelist, test_size=0.2)
-
-# create directories for train and test data
-os.chdir(imagesDir)
-os.makedirs("train")
-os.makedirs("test")
-
-def archive_data(directory_name,imagelist):
-
-	# move files to appropriate directories
+def archive_data(images_dir, directory_name, imagelist):
+    # move files to appropriate directories
     for image_file in imagelist:
-        shutil.move(imagesDir+"/"+image_file, imagesDir+"/"+directory_name)
+        shutil.move(images_dir + "/" + image_file, images_dir + "/" + directory_name)
 
-def gen_labels(imagesDir,labelsDir):
 
-	# create list files
-	ftest = open(labelsDir+"/"+"test.txt","w+")
-	ftrain = open(labelsDir+"/"+"train.txt","w+")
-
+def gen_labels(images_dir, labels_dir):
     # write to list files
-	for filename in os.listdir(imagesDir+"/"+"train"):
-		label = filename.split(".")[0][-1]
-		ftrain.write("/"+filename+" "+str(label)+"\n")
+    with open(labels_dir + "/" + "test.txt", 'wb') as writer:
+        for filename in os.listdir(images_dir + "/" + "train"):
+            label = filename.split(".")[0][-1]
+            writer.writerow("/" + filename + " " + str(label) + "\n")
 
-	for filename in os.listdir(imagesDir+"/"+"test"):
-		label = filename.split(".")[0][-1]
-		ftest.write("/"+filename+" "+str(label)+"\n")
+    with open(labels_dir + "/" + "train.txt", 'wb') as writer:
+        for filename in os.listdir(images_dir + "/" + "test"):
+            label = filename.split(".")[0][-1]
+            writer.writerow("/" + filename + " " + str(label) + "\n")
 
-	# close files
-	ftest.close()
-	ftrain.close()
 
 def main():
-    archive_data("train",train)
-    archive_data("test",test)
-    gen_labels(args.imagesDir,args.labelsDir)
+    parser = argparse.ArgumentParser(description='Process some inputs.')
+    parser.add_argument('-i', '--input', dest='images_dir', help='training images directory')
+    parser.add_argument('-l', '--label_directory', dest='labels_dir', help='directory for labels list files')
+    args = parser.parse_args()
+
+    train_images, test_images = setup(args.images_dir, "train", "test")
+
+    archive_data(args.imagesDir, "train", train_images)
+    archive_data(args.imagesDir, "test", test_images)
+
+    gen_labels(args.images_dir, args.labels_dir)
 
     print "###"
     print "Train test split and list generation completed"
     print "###"
 
+
 if __name__ == "__main__":
     main()
-
